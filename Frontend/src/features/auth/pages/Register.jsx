@@ -9,14 +9,17 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const { loading, handleRegister } = useauth();
+    const { handleRegister } = useauth();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
+        setIsSubmitting(true)
         const data = await handleRegister({ username, email, password })
-        console.log("Register data:", data)
+        // console.log("Register data:", data)
+        setIsSubmitting(false)
         if (data) {  
             navigate('/')
         } else {
@@ -57,7 +60,9 @@ const Register = () => {
                         type="password" id="password" name="password" placeholder='Enter your password' />
                     </div>
 
-                    <button className='button button-primary'>Register</button>
+                    <button className='button button-primary' disabled={isSubmitting}>
+                        {isSubmitting ? "Registering..." : "Register"}
+                    </button>
 
                 </form>
 

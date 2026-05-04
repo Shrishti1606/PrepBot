@@ -5,17 +5,20 @@ import { useauth } from "../hooks/useauth"
 
 const Login = () => {
 
-    const { loading, handleLogin } = useauth()
+    const { handleLogin } = useauth()
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
+        setIsSubmitting(true)
         const data = await handleLogin({ email, password })
+        setIsSubmitting(false)
         if (data) {  
             navigate('/')
         } else {
@@ -23,9 +26,9 @@ const Login = () => {
         }
     }
 
-    if(loading){
-        return (<main> <h1>Loading.....</h1></main>)
-    }
+    // if(loading){
+    //     return (<main> <h1>Loading.....</h1></main>)
+    // }
 
     return (
         
@@ -50,7 +53,9 @@ const Login = () => {
                         type="password" id="password" name="password" placeholder='Enter your password' />
                     </div>
 
-                    <button className='button button-primary'>Login</button>
+                    <button className='button button-primary' disabled={isSubmitting}>
+                        {isSubmitting ? "logging In..." : "Login"}
+                    </button>
 
                 </form>
                 
