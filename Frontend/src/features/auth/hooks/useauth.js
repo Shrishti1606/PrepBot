@@ -38,10 +38,9 @@ export const useauth = () => {
             if (data) {
                 setUser(data.user)
                 return data  
-            }
-            return null 
+            } 
         } catch(err) {
-            return null 
+            throw err 
         } finally {
             setLoading(false)
         }

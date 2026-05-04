@@ -19,7 +19,7 @@ export const register = async ({username, email, password}) => {
     } catch(err){
 
         console.log("Register error:", err.response?.data)
-        return null 
+        throw new Error(message)
 
     }
 }
@@ -30,8 +30,7 @@ export const login = async ( {email, password}) => {
         const response = await api.post('/api/auth/login', { email, password })  
         return response.data
     } catch(err) {
-        console.log("Login API error:", err.response?.data)
-        return null
+        
     }
 }
 

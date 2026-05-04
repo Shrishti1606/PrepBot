@@ -9,7 +9,6 @@ const Register = () => {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [error, setError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
     const errorRef = useRef("")
 
@@ -17,18 +16,14 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setError("")
         setIsSubmitting(true)
-        const data = await handleRegister({ username, email, password })
-        // console.log("Register data:", data)
-        setIsSubmitting(false)
-        console.log("data:", data)
-        console.log("error state before set:", error)
-        if (data) {  
-            navigate('/')
-        } else {
-            setError("Account already exists with this username or email")  
-            console.log("error state after set:", error)
+        try {
+            const data = await handleRegister({ username, email, password })
+            if (data) navigate('/')
+        } catch(err) {
+            alert(err.message)  
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -40,13 +35,6 @@ const Register = () => {
         <main>
             <div className="form-container">
                 <h1>Register</h1>
-
-                {/* ✅ use both ref and state */}
-                {(error || errorRef.current) && (
-                    <p className='error-message'>
-                        {error || errorRef.current}
-                    </p>
-                )}
 
                 {error && <p className='error-message'>{error}</p>}
 
