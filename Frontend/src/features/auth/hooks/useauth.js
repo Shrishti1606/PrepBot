@@ -22,6 +22,7 @@ export const useauth = () => {
             return data;
         } catch(err) {
             console.log("Login error:", err)
+            return null
         } finally {
             setLoading(false)
         }

@@ -31,6 +31,7 @@ export const login = async ( {email, password}) => {
         return response.data
     } catch(err) {
         console.log("Login API error:", err.response?.data)
+        return null
     }
 }
 
