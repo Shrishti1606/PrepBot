@@ -20,11 +20,13 @@ const Register = () => {
         const data = await handleRegister({ username, email, password })
         // console.log("Register data:", data)
         setIsSubmitting(false)
+        console.log("data:", data)
+        console.log("error state before set:", error)
         if (data) {  
             navigate('/')
         } else {
-            console.log("Setting error message")
-            setError("Account already exists with this username or email")  // ✅ show error
+            setError("Account already exists with this username or email")  
+            console.log("error state after set:", error)
         }
     }
 
