@@ -8,7 +8,14 @@ connectDB()
 
 // generateInterviewReport({ resume, selfDescription, jobDescription })
 
-app.listen(3000, () => {
-    console.log('server is running on port 3000');
-});
+.then(() => {
+        console.log("DB connected") // 👈 check if this prints
+        app.listen(3000, () => {
+            console.log('server is running on port 3000');
+        });
+    })
+    .catch((err) => {
+        console.error("DB connection failed:", err) // 👈 or this
+        process.exit(1)
+    })
 

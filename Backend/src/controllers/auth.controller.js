@@ -48,7 +48,12 @@ const registerUserController = async (req, res) => {
     }, process.env.JWT_SECRET, {expiresIn: "1d"});
 
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        maxAge: 24*60*60*1000
+    });
 
     res.status(201).json({
         message: "user registeres successfully",
@@ -69,8 +74,6 @@ const registerUserController = async (req, res) => {
 const loginUserController = async (req, res) => {
 
     const { email, password } = req.body;
-
-    console.log("Request Body:", req.body);
 
     const user = await userModel.findOne({ email });
 
