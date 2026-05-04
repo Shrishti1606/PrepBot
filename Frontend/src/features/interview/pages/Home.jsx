@@ -58,7 +58,7 @@ const Home = () => {
             <header className='page-header'>
                 <div className='page-header__top'>  {/* ✅ wrap in div */}
                     <div>
-                        <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
+                        <h1>Welcome to <span className='highlight'>PrepBot</span></h1>
                         <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
                     </div>
                     <div className='page-header__user'>
