@@ -39,6 +39,8 @@ const Register = () => {
             <div className="form-container">
                 <h1>Register</h1>
 
+                <p className='error-message'>TEST ERROR MESSAGE</p>
+
                 {error && <p className='error-message'>{error}</p>}
 
                 <form onSubmit={handleSubmit}>
