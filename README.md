@@ -1,67 +1,56 @@
-# AI Interview Report Generator
+# 🤖 PrepBot
 
-A backend project that generates an **AI-based interview report from a candidate's information**.
+A full-stack web application that analyzes your resume and job description using AI to generate a personalized interview preparation plan..
 
 The application takes a **PDF resume, self description and job description**, extracts its content, and sends it to an AI model to generate an **interview-style report** including match score and technical interview questions.
 
-This project was built mainly to **practice backend development, API design, and integrating AI services into a real-world workflow**.
+---
+
+## ✨ Features
+
+- **Resume Upload** — Upload your PDF resume for AI analysis
+- **Self Description** — Alternatively describe yourself in text
+- **Match Score** — See how well your profile matches the job
+- **Technical Questions** — AI-generated questions with intentions and model answers
+- **Behavioral Questions** — Soft skill questions tailored to the role
+- **Preparation Roadmap** — Day-by-day preparation plan
+- **Skill Gap Analysis** — Identify missing skills with severity levels
+- **Resume Download** — Generate and download a tailored resume as PDF
+- **Authentication** — Secure login/register with JWT and cookie-based sessions
+- **Report History** — View all previously generated interview plans
 
 ---
 
-## Features
+## 🛠️ Tech Stack
 
-- Upload a candidate **resume (PDF)**
-- Extract text from the resume
-- Send extracted content to an **AI model**
-- Generate an **AI interview report**
-- Store the generated report in **MongoDB**
-- Return structured interview questions and evaluation
+**Frontend** — React.js, Vite, Axios, SCSS
 
----
+**Backend** — Node.js, Express.js, MongoDB, JWT, Multer, Puppeteer
 
-## Tech Stack
-
-### Backend
-- Node.js
-- Express.js
-
-### Database
-- MongoDB
-- Mongoose
-
-### AI Integration
-- Google Generative AI API
-
+**AI** — Groq API (llama-3.3-70b-versatile)
 
 ---
 
-## Limitations
+## ⚠️ Limitations
 
-- AI responses are not always perfectly structured.
-- API quota limits can stop report generation.
-- Currently supports only **PDF resumes**.
-- Error handling can be improved.
-
----
-
-## Possible Improvements
-
-- Better prompt engineering for structured responses
-- Resume skill extraction
-- Frontend interface
-- Authentication system
-- Support for more resume formats
-- Improved error handling
+- AI-generated resume may lack professional formatting and design
+- Personal details only appear in resume if clearly provided in input
+- Scanned/image-based PDFs cannot be parsed correctly
+- Vague job descriptions lead to generic outputs
+- Groq free tier has rate limits — generation may fail under heavy use
+- Report generation takes 20-40 seconds with no progress indicator
+- Sessions expire after 24 hours
 
 ---
 
-## Why I Built This
+## 🔮 Future Improvements
 
-I built this project to practice:
+- [ ] Better resume templates with multiple design options
+- [ ] Mock interview mode with voice input
+- [ ] ATS score checker
+- [ ] Email report delivery
 
-- Backend architecture
-- AI API integration
-- File uploads in Node.js
-- PDF data extraction
-- Building real-world APIs
+---
+
+**LinkedIn**: [linkedin.com/in/shrishti-dhiman](https://linkedin.com/in/shrishti-dhiman)
 
