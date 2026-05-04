@@ -11,6 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const errorRef = useRef("")
 
     const { handleRegister } = useauth();
 
@@ -40,7 +41,12 @@ const Register = () => {
             <div className="form-container">
                 <h1>Register</h1>
 
-                <p className='error-message'>TEST ERROR MESSAGE</p>
+                {/* ✅ use both ref and state */}
+                {(error || errorRef.current) && (
+                    <p className='error-message'>
+                        {error || errorRef.current}
+                    </p>
+                )}
 
                 {error && <p className='error-message'>{error}</p>}
 
