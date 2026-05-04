@@ -52,5 +52,5 @@ The application takes a **PDF resume, self description and job description**, ex
 
 ---
 
-**LinkedIn**: [linkedin.com/in/shrishti-dhiman](https://linkedin.com/in/shrishti-dhiman)
+**LinkedIn**: [linkedin.com/in/shrishti-dhiman](https://linkedin.com/in/shrishti-dhiman16)
 
