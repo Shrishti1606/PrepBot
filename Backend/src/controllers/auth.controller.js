@@ -50,8 +50,8 @@ const registerUserController = async (req, res) => {
 
     res.cookie("token", token, {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
         maxAge: 24*60*60*1000
     });
 
@@ -99,8 +99,8 @@ const loginUserController = async (req, res) => {
 
     res.cookie("token", token, {
         httpOnly: true,
-        secure: false,   // localhost
-        sameSite: "lax", // or 'none' + secure:true if HTTPS
+        secure: true,   // localhost
+        sameSite: "none", // or 'none' + secure:true if HTTPS
         maxAge: 24*60*60*1000
     });
 
