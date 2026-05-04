@@ -16,6 +16,7 @@ const Register = () => {
         e.preventDefault()
         setError("")
         const data = await handleRegister({ username, email, password })
+        console.log("Register data:", data)
         if (data) {  
             navigate('/')
         } else {
