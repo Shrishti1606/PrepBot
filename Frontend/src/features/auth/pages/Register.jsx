@@ -20,6 +20,7 @@ const Register = () => {
         if (data) {  
             navigate('/')
         } else {
+            console.log("Setting error message")
             setError("Account already exists with this username or email")  // ✅ show error
         }
     }
