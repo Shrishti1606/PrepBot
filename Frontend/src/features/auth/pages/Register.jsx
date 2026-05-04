@@ -10,7 +10,6 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const errorRef = useRef("")
 
     const { handleRegister } = useauth();
 
@@ -33,8 +32,6 @@ const Register = () => {
         <main>
             <div className="form-container">
                 <h1>Register</h1>
-
-                {error && <p className='error-message'>{error}</p>}
 
                 <form onSubmit={handleSubmit}>
 
