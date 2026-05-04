@@ -21,6 +21,7 @@ const Register = () => {
             const data = await handleRegister({ username, email, password })
             if (data) navigate('/')
         } catch(err) {
+            console.log("Caught error:", err.message)
             alert(err.message)  
         } finally {
             setIsSubmitting(false)
