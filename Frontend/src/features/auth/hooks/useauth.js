@@ -1,11 +1,14 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../auth.context";
+import { InterviewContext } from "../../interview/interview.context";
 import { login, register, logout, getMe } from "../services/auth.api";
 
 export const useauth = () => {
 
     const context = useContext(AuthContext)
+    const interviewContext = useContext(InterviewContext) 
     const { user, setUser, loading, setLoading } = context;
+    const { setReports, setReport } = interviewContext 
 
 
     const handleLogin = async ({ email, password }) => {
@@ -14,9 +17,11 @@ export const useauth = () => {
 
         try{
             const data = await login({ email, password })
+            console.log("Login response:", data)
             setUser(data.user)
+            return data;
         } catch(err) {
-
+            console.log("Login error:", err)
         } finally {
             setLoading(false)
         }
@@ -30,6 +35,7 @@ export const useauth = () => {
         try{
             const data = await register({ username, email, password })
             setUser(data.user)
+            return data
         } catch(err) {
 
         } finally {
@@ -45,6 +51,8 @@ export const useauth = () => {
         try{
             const data = await logout()
             setUser(null)
+            setReports([])   
+            setReport(null) 
         } catch(err) {
 
         } finally {

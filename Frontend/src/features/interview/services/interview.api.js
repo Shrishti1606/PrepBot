@@ -40,4 +40,18 @@ export const getAllInterviewReports = async () => {
     return response.data
 }
 
+export const downloadResumePdf = async (interviewId) => {
+    const response = await api.get(`/api/interview/resume/${interviewId}`, {
+        responseType: 'blob'
+    })
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'resume.pdf')
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+}
+
 

@@ -1,8 +1,7 @@
-import { getAllInterviewReports, generateInterviewReport, getInterviewReportById } from "../services/interview.api"
+import { getAllInterviewReports, generateInterviewReport, getInterviewReportById, downloadResumePdf } from "../services/interview.api"
 import { useContext, useEffect } from "react"
 import { InterviewContext } from "../interview.context"
 import { useParams } from "react-router"
-
 
 export const useInterview = () => {
 
@@ -16,51 +15,48 @@ export const useInterview = () => {
     const { loading, setLoading, report, setReport, reports, setReports } = context
 
     const generateReport = async ({ jobDescription, selfDescription, resumeFile }) => {
-        setLoading(true);
-        let response = null;
-        try {
-            response = await generateInterviewReport({ jobDescription, selfDescription, resumeFile });
-            if (response && response.interviewReport) {
-            setReport(response.interviewReport);
-            return response.interviewReport;
-            console.log("API RESPONSE:", response)
-            }
-        } catch (error) {
-            console.error("Error generating report:", error);
-        } finally {
-            setLoading(false);
-        }
-        return null; 
-        console.log("API RESPONSE:", response)
-    };
-
-    const getReportById = async (interviewId) => {
         setLoading(true)
-        let response = null
         try {
-            response = await getInterviewReportById(interviewId)
-            setReport(response.interviewReport)
+            const response = await generateInterviewReport({ jobDescription, selfDescription, resumeFile })
+            if (response?.interviewReport) {
+                setReport(response.interviewReport)
+                return response.interviewReport  
+            }
+            return null
         } catch (error) {
-            console.log(error)
+            console.error("Error generating report:", error)
+            return null
         } finally {
             setLoading(false)
         }
-        return response.interviewReport
+    }
+
+    const getReportById = async (interviewId) => {
+        setLoading(true)
+        try {
+            const response = await getInterviewReportById(interviewId)
+            setReport(response.interviewReport)
+            return response.interviewReport  
+        } catch (error) {
+            console.log(error)
+            return null  
+        } finally {
+            setLoading(false)
+        }
     }
 
     const getReports = async () => {
         setLoading(true)
-        let response = null
         try {
-            response = await getAllInterviewReports()
+            const response = await getAllInterviewReports()
             setReports(response.interviewReports)
+            return response.interviewReports 
         } catch (error) {
             console.log(error)
+            return null  
         } finally {
             setLoading(false)
         }
-
-        return response.interviewReports
     }
 
     useEffect(() => {
@@ -69,8 +65,15 @@ export const useInterview = () => {
         } else {
             getReports()
         }
-    }, [ interviewId ])
+    }, [interviewId])
 
-    return { loading, report, reports, generateReport, getReportById, getReports }
+    const getResumePdf = async (interviewId) => {
+        try {
+            await downloadResumePdf(interviewId)
+        } catch (error) {
+            console.error("Error downloading resume:", error)
+        }
+    }
 
+    return { loading, report, reports, generateReport, getReportById, getReports, getResumePdf }
 }

@@ -2,27 +2,38 @@ import React, { useState, useRef } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
+import { useauth } from '../../auth/hooks/useauth' 
 
 const Home = () => {
 
     const { loading, generateReport,reports } = useInterview()
+    const { user, handleLogout } = useauth()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
 
+    const onLogout = async () => {
+        await handleLogout()
+        navigate("/login")
+    }
+
+    const [jobDescLength, setJobDescLength] = useState(0)
+    const [resumeFile, setResumeFile] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) setResumeFile(file)
+    }
+
     const handleGenerateReport = async () => {
         try {
-            const resumeFile = resumeInputRef.current.files[0]
-
             const data = await generateReport({
                 jobDescription,
                 selfDescription,
                 resumeFile
-            })
-
-            console.log("API Response:", data)
+            })         
 
             if (!data?._id) {
                 alert("Report generation failed")
@@ -40,9 +51,21 @@ const Home = () => {
         <div className='home-page'>
 
             {/* Page Header */}
-            <header className='page-header'>
+            {/* <header className='page-header'>
                 <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
                 <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
+            </header> */}
+            <header className='page-header'>
+                <div className='page-header__top'>  {/* ✅ wrap in div */}
+                    <div>
+                        <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
+                        <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
+                    </div>
+                    <div className='page-header__user'>
+                        <span>👋 {user?.username}</span>
+                        <button className='logout-btn' onClick={onLogout}>Logout</button>
+                    </div>
+                </div>
             </header>
 
             {/* Main Card */}
@@ -59,12 +82,15 @@ const Home = () => {
                             <span className='badge badge--required'>Required</span>
                         </div>
                         <textarea
-                            onChange={(e) => { setJobDescription(e.target.value) }}
+                            onChange={(e) => { 
+                                setJobDescription(e.target.value)
+                                setJobDescLength(e.target.value.length) 
+                            }}
                             className='panel__textarea'
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
                         />
-                        <div className='char-counter'>0 / 5000 chars</div>
+                        <div className='char-counter'>{jobDescLength} / 5000 chars</div>
                     </div>
 
                     {/* Vertical Divider */}
@@ -85,13 +111,40 @@ const Home = () => {
                                 Upload Resume
                                 <span className='badge badge--best'>Best Results</span>
                             </label>
-                            <label className='dropzone' htmlFor='resume'>
-                                <span className='dropzone__icon'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></svg>
-                                </span>
-                                <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
-                                <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
-                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
+            
+                            <label className={`dropzone ${resumeFile ? 'dropzone--attached' : ''}`} htmlFor='resume'>
+                                {resumeFile ? (
+                                    <>
+                                        <span className='dropzone__icon' style={{ color: 'green' }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <polyline points="20 6 9 17 4 12" />
+                                                        </svg>
+                                                    </span>
+                                                    <p className='dropzone__title' style={{ color: 'green' }}>✅ {resumeFile.name}</p>
+                                                    <p className='dropzone__subtitle'>{(resumeFile.size / 1024).toFixed(1)} KB — Click to change</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span className='dropzone__icon'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <polyline points="16 16 12 12 8 16" />
+                                                            <line x1="12" y1="12" x2="12" y2="21" />
+                                                            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+                                                        </svg>
+                                                    </span>
+                                                    <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
+                                                    <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
+                                                </>
+                                            )}
+                                            <input
+                                                ref={resumeInputRef}
+                                                hidden
+                                                type='file'
+                                                id='resume'
+                                                name='resume'
+                                                accept='.pdf,.docx'
+                                                onChange={handleFileChange}
+                                            />
                             </label>
                         </div>
 

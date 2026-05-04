@@ -6,7 +6,7 @@ const api = axios.create({
     withCredentials: true
 })
 
-export const register = async (username, email, password) => {
+export const register = async ({username, email, password}) => {
     
     try{
 
@@ -18,25 +18,18 @@ export const register = async (username, email, password) => {
 
     } catch(err){
 
-        console.log(err);
+        console.log("Register error:", err.response?.data)  
 
     }
 }
 
 export const login = async ( {email, password}) => {
     
-    try{
-
-        const response = await api.post('/api/auth/login', {
-            email, password
-        })
-
+    try {
+        const response = await api.post('/api/auth/login', { email, password })  
         return response.data
-
-    } catch(err){
-
-        console.log(err);
-
+    } catch(err) {
+        console.log("Login API error:", err.response?.data)
     }
 }
 
@@ -65,7 +58,8 @@ export const getMe = async () => {
 
     } catch(err){
 
-        console.log(err);
+        if (err.response?.status === 401) return null  // return null
+        console.log(err)
 
     }
 }

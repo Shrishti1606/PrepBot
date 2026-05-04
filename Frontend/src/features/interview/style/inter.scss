@@ -1,20 +1,19 @@
 @use "sass:color";
 
 // ── Shared Variables (mirrors home.scss theme) ────────────────────────────────
-$bg-page: #0d1117;
-$bg-card: #161b22;
-$bg-panel: #1c2230;
-$bg-input: #1e2535;
-$border-color: #2a3348;
-$text-primary: #e6edf3;
-$text-muted: #7d8590;
-$accent: #ff2d78;
-$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$bg-page:        #1a1208;        // dark warm brown instead of cream
+$bg-card:        #c98a1a;        // darker amber instead of bright yellow
+$bg-panel:       #0f0d08;        // near black warm
+$bg-input:       #1e1a0e;        // dark warm input
+$border-color:   #c98a1a;        // amber border
+$text-primary:   #f0d080;        // warm yellow text instead of white
+$text-muted:     #8a7a50;        // muted amber
+$accent:         #c0392b;        // rust red stays
+$font-stack:     'Courier New', Courier, monospace;
 
-// severity palette
-$severity-high: #ff4d4d;
-$severity-medium: #f5a623;
-$severity-low: #3fb950;
+$severity-high:  #c0392b;
+$severity-medium:#e67e22;
+$severity-low:   #2d5a27;
 
 *::-webkit-scrollbar {
     display: none;
@@ -565,4 +564,237 @@ $severity-low: #3fb950;
         background-color: rgba($severity-low, 0.1);
         border-color: rgba($severity-low, 0.25);
     }
+}
+
+// ── Cyberpunk Effects ─────────────────────────────────────────────────────────
+
+// glowing borders on cards
+.interview-card, .interview-layout {
+    border-color: rgba($accent, 0.15);
+    box-shadow: 0 0 30px rgba($accent, 0.03), 
+                inset 0 0 30px rgba($accent, 0.01);
+}
+
+// glowing accent elements
+.q-card__index,
+.roadmap-day__badge,
+.interview-nav__item--active {
+    box-shadow: 0 0 8px rgba($accent, 0.3);
+}
+
+// scan line effect on page
+.home-page, .interview-page {
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba($accent, 0.01) 2px,
+        rgba($accent, 0.01) 4px
+    );
+}
+
+// glowing generate button
+.generate-btn {
+    background: transparent;
+    border: 1px solid $accent;
+    color: $accent;
+    box-shadow: 0 0 10px rgba($accent, 0.2);
+    
+    &:hover {
+        background: rgba($accent, 0.1);
+        box-shadow: 0 0 20px rgba($accent, 0.4), 0 0 40px rgba($accent, 0.1);
+    }
+}
+
+// glowing highlight text
+.highlight {
+    color: $accent;
+    text-shadow: 0 0 10px rgba($accent, 0.6), 0 0 30px rgba($accent, 0.2);
+}
+
+// ── Retro Cyberpunk Overrides ─────────────────────────────────────────────────
+
+// Bold black borders everywhere
+.interview-card, .interview-layout, 
+.q-card, .panel__textarea, .dropzone {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0.3rem !important;
+    box-shadow: 4px 4px 0px #1a1a1a !important;
+}
+
+// Amber header card
+.interview-card {
+    background-color: #e8a832;
+}
+
+// Cream panels
+.panel--left, .panel--right {
+    background-color: #f5edd8;
+}
+
+// Bold uppercase headings
+h1, h2, h3 {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+}
+
+// Generate button retro style
+.generate-btn {
+    background: #1a1a1a !important;
+    color: #e8a832 !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0.2rem !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 3px 3px 0px #4a3f35 !important;
+
+    &:hover {
+        background: #c0392b !important;
+        box-shadow: 5px 5px 0px #4a3f35 !important;
+        transform: translate(-1px, -1px) !important;
+    }
+}
+
+// Logout button retro
+.logout-btn {
+    background: transparent !important;
+    border: 2px solid #1a1a1a !important;
+    color: #1a1a1a !important;
+    border-radius: 0.2rem !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    box-shadow: 2px 2px 0px #4a3f35 !important;
+
+    &:hover {
+        background: #1a1a1a !important;
+        color: #e8a832 !important;
+    }
+}
+
+// Nav items retro
+.interview-nav__item--active {
+    background-color: #1a1a1a !important;
+    color: #e8a832 !important;
+    border-radius: 0.2rem !important;
+}
+
+// Question cards
+.q-card {
+    background-color: #f5edd8 !important;
+    
+    &__index {
+        background-color: #1a1a1a !important;
+        color: #e8a832 !important;
+        border-radius: 0.2rem !important;
+    }
+}
+
+// Skill tags retro
+.skill-tag {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0.2rem !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-weight: 700 !important;
+}
+
+// Roadmap badge
+.roadmap-day__badge {
+    background-color: #1a1a1a !important;
+    color: #e8a832 !important;
+    border-radius: 0.2rem !important;
+}
+
+// Page background texture
+.home-page, .interview-page {
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(#e8a832, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(#2d5a27, 0.2) 0%, transparent 50%);
+}
+
+// ── Visibility Fixes ──────────────────────────────────────────────────────────
+
+// question cards — dark bg with amber text
+.q-card {
+    background-color: #1a1208 !important;
+    border: 2px solid #c98a1a !important;
+    
+    &__question {
+        color: #f0d080 !important;
+    }
+
+    &__index {
+        background-color: #c0392b !important;
+        color: #f0d080 !important;
+        border: none !important;
+    }
+
+    &__body {
+        background-color: #120e06 !important;
+        border-top: 1px solid #c98a1a !important;
+
+        p {
+            color: #c9a84c !important;
+        }
+    }
+
+    &__chevron {
+        color: #c98a1a !important;
+    }
+}
+
+// fix invisible skill tags
+.skill-tag {
+    &--high {
+        color: #ff4d4d !important;
+        background-color: rgba(#ff4d4d, 0.15) !important;
+        border-color: #ff4d4d !important;
+    }
+    &--medium {
+        color: #f5a623 !important;
+        background-color: rgba(#f5a623, 0.15) !important;
+        border-color: #f5a623 !important;
+    }
+    &--low {
+        color: #3fb950 !important;
+        background-color: rgba(#3fb950, 0.15) !important;
+        border-color: #3fb950 !important;
+    }
+}
+
+// fix nav text visibility
+.interview-nav__item {
+    color: #c9a84c !important;
+}
+
+// fix match score text
+.match-score__value {
+    color: #f0d080 !important;
+}
+
+// fix sidebar labels
+.match-score__label, .skill-gaps__label {
+    color: #c9a84c !important;
+}
+
+// interview layout bg
+.interview-layout {
+    background-color: #c98a1a !important;
+}
+
+// content area dark
+.interview-content {
+    background-color: #1a1208 !important;
+}
+
+// nav area dark
+.interview-nav {
+    background-color: #120e06 !important;
+}
+
+// sidebar dark
+.interview-sidebar {
+    background-color: #120e06 !important;
 }
