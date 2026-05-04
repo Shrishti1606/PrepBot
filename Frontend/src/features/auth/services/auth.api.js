@@ -18,8 +18,7 @@ export const register = async ({username, email, password}) => {
 
     } catch(err){
 
-        const message = err.response?.data?.message || "Registration failed"
-        throw new Error(message)
+        return null
 
     }
 }
