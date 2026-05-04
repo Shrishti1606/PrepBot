@@ -17,6 +17,7 @@ const Register = () => {
         e.preventDefault()
         setIsSubmitting(true)
         const data = await handleRegister({ username, email, password })
+        setIsSubmitting(false)
         if (data) {
             navigate('/')
         } else {
