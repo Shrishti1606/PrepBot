@@ -37,7 +37,7 @@ The application takes a **PDF resume, self description and job description**, ex
 - Personal details only appear in resume if clearly provided in input
 - Scanned/image-based PDFs cannot be parsed correctly
 - Vague job descriptions lead to generic outputs
-- Groq free tier has rate limits — generation may fail under heavy use
+- Groq free tier has rate limits, generation may fail under heavy use
 - Report generation takes 20-40 seconds with no progress indicator
 - Sessions expire after 24 hours
 
