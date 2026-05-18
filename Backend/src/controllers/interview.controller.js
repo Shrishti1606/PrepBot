@@ -1,7 +1,8 @@
 const pdfParse = require("pdf-parse-new")
 const {generateInterviewReport} = require("../services/ai.service");
 const interviewReportModel = require("../models/interviewReport.model")
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer-core')
+const chromium = require('@sparticuz/chromium')
 const Groq = require('groq-sdk')
 
 const groqClient = new Groq({ apiKey: process.env.GROQ_API_KEY })
@@ -83,6 +84,14 @@ const getAllInterviewReportsController = async (req, res) => {
 }
 
 const downloadResumeController = async (req, res) => {
+
+    const browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+    })
+
     const { interviewId } = req.params
 
     const report = await interviewReportModel.findOne({ _id: interviewId, user: req.user.id })

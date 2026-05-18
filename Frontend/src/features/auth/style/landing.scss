@@ -1,0 +1,541 @@
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes blink {
+    0%, 90%, 100% { opacity: 1; }
+    95% { opacity: 0; }
+}
+
+@keyframes bubble-rise {
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+@keyframes fall {
+    0%   { transform: translateY(-10px); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+$accent:      #a78bfa;
+$accent-deep: #7c3aed;
+$bg-top:      #1a1035;
+$bg-bottom:   #2d1558;
+$bg-card:     rgba(124,58,237,0.25);
+$border:      rgba(167,139,250,0.18);
+$text:        #f0eaff;
+$text-muted:  #9d86cc;
+$text-hint:   #6d5a9e;
+$font:        system-ui, -apple-system, sans-serif;
+
+.land * { cursor: none; }
+
+.land .custom-cursor {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    background: $accent;
+}
+
+.land .custom-cursor-ring {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid $accent;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    background: transparent;
+}
+
+.land-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+    &:hover .land-tooltip { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+}
+
+.land-tooltip {
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    background: rgba(22,13,48,0.95);
+    border: 1px solid $border;
+    color: $text;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+}
+
+.land {
+    font-family: $font;
+    background: linear-gradient(180deg, $bg-top 0%, $bg-bottom 100%);
+    color: $text;
+    min-height: 100vh;
+    position: relative;
+}
+
+// ── Navbar ────────────────────────────────────────────────────────────────────
+.land-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(22,13,48,0.85);
+    border-bottom: 1px solid $border;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: $accent;
+    }
+
+    &__logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: $accent-deep;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 12px rgba(124,58,237,0.5);
+    }
+
+    &__links { display: flex; gap: 0.75rem; }
+
+    &__btn {
+        padding: 0.4rem 1.2rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: $font;
+        transition: all 0.2s;
+
+        &--ghost {
+            background: transparent;
+            border: 1.5px solid $accent;
+            color: $accent;
+            &:hover { background: rgba(167,139,250,0.1); }
+        }
+
+        &--fill {
+            background: linear-gradient(135deg, $accent-deep, #a855f7);
+            border: 1.5px solid transparent;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+            &:hover { box-shadow: 0 6px 24px rgba(124,58,237,0.6); transform: translateY(-1px); }
+        }
+    }
+}
+
+// ── Hero ──────────────────────────────────────────────────────────────────────
+.land-hero {
+    display: flex;
+    align-items: center;
+    min-height: 80vh;
+    padding: 3rem;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+
+    &__left {
+        flex: 1;
+        animation: slideIn 0.8s ease both;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__tag {
+        display: inline-block;
+        background: rgba(167,139,250,0.15);
+        color: $accent;
+        padding: 0.3rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1.2rem;
+        border: 1px solid $border;
+    }
+
+    &__title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.15;
+        margin: 0 0 1rem;
+        color: $text;
+        text-shadow: 0 0 40px rgba(167,139,250,0.3);
+        span { color: $accent; }
+    }
+
+    &__sub {
+        font-size: 1.05rem;
+        color: $text-muted;
+        line-height: 1.7;
+        margin: 0 0 2rem;
+        max-width: 480px;
+    }
+
+    &__btns { display: flex; gap: 1rem; }
+
+    &__stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2.5rem;
+    }
+
+    &__stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+    &__stat-val {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: $accent;
+        text-shadow: 0 0 20px rgba(167,139,250,0.4);
+    }
+
+    &__stat-label { font-size: 0.78rem; color: $text-hint; }
+
+    &__right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__circle {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+        z-index: 0;
+    }
+
+    &__card {
+        background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(91,33,182,0.25));
+        border: 1px solid $border;
+        border-radius: 20px;
+        padding: 1.75rem;
+        width: 300px;
+        backdrop-filter: blur(12px);
+        animation: float 3s ease-in-out infinite;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 8px 32px rgba(124,58,237,0.2);
+    }
+
+    &__card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    &__card-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(167,139,250,0.15);
+        border: 1px solid $border;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: visible;
+
+        svg {
+            width: 76px;
+            height: 80px;
+        }
+    }
+
+    &__card-name { font-weight: 600; font-size: 0.9rem; color: $text; }
+    &__card-role { font-size: 0.75rem; color: $text-hint; }
+
+    &__card-score {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(124,58,237,0.2);
+        border: 1px solid $border;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    &__card-score-label { font-size: 0.8rem; color: $accent; font-weight: 600; }
+    &__card-score-val { font-size: 1.3rem; font-weight: 800; color: $accent; }
+
+    &__card-tags { margin-bottom: 0.75rem; }
+    &__card-tags-label { font-size: 0.75rem; color: $text-hint; margin-bottom: 0.4rem; }
+
+    &__card-footer {
+        background: rgba(124,58,237,0.2);
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+        color: $accent;
+        font-weight: 600;
+        text-align: center;
+        border: 1px solid $border;
+    }
+
+    &__card-robot {
+        position: absolute;
+        bottom: -80px;
+        right: -70px;
+        animation: float 3.5s ease-in-out infinite;
+        z-index: 2;
+
+        svg {
+            width: 150px;
+            height: 160px;
+        }
+    }
+}
+
+// ── Bubbles ───────────────────────────────────────────────────────────────────
+.land-bubbles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.land-bub {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(167,139,250,0.12);
+    border: 1px solid rgba(167,139,250,0.2);
+    bottom: -100px;
+    animation: bubble-rise linear infinite;
+
+    &--1 { width: 60px; height: 60px; left: 5%;  animation-duration: 9s;  animation-delay: 0s; }
+    &--2 { width: 30px; height: 30px; left: 20%; animation-duration: 7s;  animation-delay: 1s; }
+    &--3 { width: 45px; height: 45px; left: 50%; animation-duration: 11s; animation-delay: 2s; }
+    &--4 { width: 20px; height: 20px; left: 75%; animation-duration: 6s;  animation-delay: 0.5s; }
+    &--5 { width: 50px; height: 50px; left: 88%; animation-duration: 8s;  animation-delay: 3s; }
+    &--6 { width: 35px; height: 35px; left: 35%; animation-duration: 10s; animation-delay: 1.5s; }
+}
+
+// ── Buttons ───────────────────────────────────────────────────────────────────
+.land-btn-primary {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, $accent-deep, #a855f7);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: $font;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+    &:hover { box-shadow: 0 6px 24px rgba(124,58,237,0.6); transform: translateY(-1px); }
+    &:active { transform: scale(0.98); }
+}
+
+.land-btn-secondary {
+    padding: 0.8rem 2rem;
+    background: transparent;
+    color: $accent;
+    border: 1.5px solid $accent;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: $font;
+    transition: all 0.2s;
+    &:hover { background: rgba(167,139,250,0.1); }
+}
+
+// ── Tags ──────────────────────────────────────────────────────────────────────
+.land-tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin: 0.2rem;
+
+    &--high { background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+    &--med  { background: rgba(251,191,36,0.15);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+    &--low  { background: rgba(52,211,153,0.15);  color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+}
+
+// ── Section commons ───────────────────────────────────────────────────────────
+.land-section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    color: $text;
+    span { color: $accent; }
+}
+
+.land-section-sub {
+    text-align: center;
+    color: $text-hint;
+    margin: 0 0 3rem;
+}
+
+// ── Features ──────────────────────────────────────────────────────────────────
+.land-features {
+    padding: 5rem 3rem;
+    background: rgba(22,13,48,0.6);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
+.land-feature-card {
+    background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(91,33,182,0.15));
+    border: 1px solid $border;
+    border-radius: 14px;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s, box-shadow 0.2s;
+    &:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(124,58,237,0.2); }
+
+    &__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(167,139,250,0.3), rgba(124,58,237,0.5));
+        border: 1px solid $border;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    &__title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; color: $text; }
+    &__desc  { font-size: 0.82rem; color: $text-muted; line-height: 1.6; margin: 0; }
+}
+
+// ── Steps ─────────────────────────────────────────────────────────────────────
+.land-steps {
+    padding: 5rem 3rem;
+
+    &__row {
+        display: flex;
+        gap: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        align-items: flex-start;
+    }
+
+    &__arrow { padding-top: 1.5rem; color: $text-hint; font-size: 1.5rem; }
+}
+
+.land-step {
+    flex: 1;
+    text-align: center;
+
+    &__num {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $accent-deep, #a855f7);
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+    }
+
+    &__title { font-weight: 700; margin-bottom: 0.4rem; color: $text; }
+    &__desc  { font-size: 0.82rem; color: $text-muted; line-height: 1.6; }
+}
+
+// ── CTA ───────────────────────────────────────────────────────────────────────
+.land-cta {
+    background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(91,33,182,0.3));
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    padding: 5rem 3rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+
+    &__title { font-size: 2rem; font-weight: 800; color: $text; margin: 0 0 0.75rem; }
+    &__sub   { color: $text-muted; margin: 0 0 2rem; }
+
+    &__btn {
+        padding: 0.9rem 2.5rem;
+        background: linear-gradient(135deg, $accent-deep, #a855f7);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: $font;
+        transition: all 0.2s;
+        box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+        &:hover { box-shadow: 0 6px 24px rgba(124,58,237,0.6); transform: translateY(-1px); }
+    }
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+.land-footer {
+    background: rgba(22,13,48,0.9);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid $border;
+
+    &__logo { font-weight: 700; color: $accent; }
+
+    &__links { display: flex; gap: 1.5rem; }
+
+    &__link {
+        font-size: 0.8rem;
+        color: $text-hint;
+        text-decoration: none;
+        transition: color 0.2s;
+        &:hover { color: $accent; }
+    }
+}
+
+.robot-eye { animation: blink 4s ease-in-out infinite; }

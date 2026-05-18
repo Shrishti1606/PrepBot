@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../auth.form.scss'
 import { useNavigate, Link } from 'react-router'
 import { useauth } from "../hooks/useauth"
+import AuthRobotSVG from '../components/AuthRobotSVG'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 
@@ -23,7 +24,7 @@ const Login = () => {
         const data = await handleLogin({ email, password })
         setIsSubmitting(false)
         if (data) {
-            navigate('/')
+            navigate('/home')
         } else {
             setError("Invalid email or password")
         }
@@ -46,9 +47,9 @@ const Login = () => {
 
             //checks position of the mouse
             if (e.clientX < window.innerWidth / 2) {
-                gsap.to(cursor, { background: '#fff', duration: 0.3 }) //on left (pur) side -> white cursor
+                gsap.to(cursor, { background: '#20153d', duration: 0.3 }) // left side → purple
             } else {
-                gsap.to(cursor, { background: '#8b2252', duration: 0.3 }) //on reight (white) side -> purple cursor
+                gsap.to(cursor, { background: '#c4b5fd', duration: 0.3 }) // right side → light purple
             }
         }
 
@@ -73,24 +74,7 @@ const Login = () => {
                 </div>
                 <div className="auth-left__content">
                     <div className="robot-wrapper">
-                        <svg width="160" height="180" viewBox="0 0 100 110" className="robot-svg">
-                            <rect x="30" y="8" width="40" height="32" rx="8" fill="#f0c4d4" stroke="#8b2252" strokeWidth="1.5"/>
-                            <rect x="38" y="16" width="10" height="8" rx="3" fill="#8b2252" className="robot-eye"/>
-                            <rect x="52" y="16" width="10" height="8" rx="3" fill="#8b2252" className="robot-eye"/>
-                            <rect x="40" y="28" width="20" height="4" rx="2" fill="#8b2252" opacity="0.5"/>
-                            <rect x="47" y="4" width="6" height="8" rx="3" fill="#8b2252"/>
-                            <rect x="20" y="42" width="60" height="36" rx="8" fill="#f4b8cc" stroke="#8b2252" strokeWidth="1.5"/>
-                            <rect x="28" y="50" width="18" height="3" rx="1.5" fill="#8b2252" opacity="0.4"/>
-                            <rect x="28" y="57" width="12" height="3" rx="1.5" fill="#8b2252" opacity="0.3"/>
-                            <rect x="54" y="48" width="16" height="18" rx="4" fill="#8b2252" opacity="0.15" stroke="#8b2252" strokeWidth="1"/>
-                            <rect x="57" y="51" width="10" height="2" rx="1" fill="#8b2252" opacity="0.4"/>
-                            <rect x="57" y="55" width="8" height="2" rx="1" fill="#8b2252" opacity="0.3"/>
-                            <rect x="57" y="59" width="10" height="2" rx="1" fill="#8b2252" opacity="0.4"/>
-                            <rect x="8" y="44" width="12" height="28" rx="6" fill="#f0c4d4" stroke="#8b2252" strokeWidth="1.5"/>
-                            <rect x="80" y="44" width="12" height="28" rx="6" fill="#f0c4d4" stroke="#8b2252" strokeWidth="1.5"/>
-                            <rect x="30" y="78" width="14" height="28" rx="6" fill="#f0c4d4" stroke="#8b2252" strokeWidth="1.5"/>
-                            <rect x="56" y="78" width="14" height="28" rx="6" fill="#f0c4d4" stroke="#8b2252" strokeWidth="1.5"/>
-                        </svg>
+                        <AuthRobotSVG />
                     </div>
                     <h2 className="auth-left__title">Ace your next interview</h2>
                     <p className="auth-left__subtitle">AI-powered prep plans tailored just for you</p>
