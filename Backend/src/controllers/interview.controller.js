@@ -85,13 +85,6 @@ const getAllInterviewReportsController = async (req, res) => {
 
 const downloadResumeController = async (req, res) => {
 
-    const browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-        headless: chromium.headless,
-    })
-
     const { interviewId } = req.params
 
     const report = await interviewReportModel.findOne({ _id: interviewId, user: req.user.id })
@@ -229,7 +222,13 @@ const downloadResumeController = async (req, res) => {
         </html>
         `
 
-    const browser = await puppeteer.launch({ headless: true })
+    
+    const browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+    })
     const page = await browser.newPage()
     await page.setContent(html, { waitUntil: 'networkidle0' })
     const pdf = await page.pdf({ 
