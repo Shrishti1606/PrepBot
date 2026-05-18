@@ -112,10 +112,12 @@ const downloadResumeController = async (req, res) => {
         - Rewrite the professional summary to TARGET this specific job
         - Reorder and emphasize skills that MATCH the job description first
         - For experience bullet points, rephrase to highlight relevance to this job
-        - Add the skill gaps as "Learning/Improving" in skills section to show growth
+        - DO NOT add "Learning/Improving" anywhere — only list skills the candidate actually has
+        - List ALL skills in a simple comma separated plain text line, not as badges or blocks
         - If no date is available leave it empty — never write "No specific date"
         - Make LinkedIn and GitHub clickable using <a href="[url]" style="color:#6c63ff;text-decoration:none;">[url]</a>
         - Return ONLY clean HTML body content, no markdown, no backticks
+        - Keep it clean, minimal and ATS friendly — no fancy formatting, no colored boxes for skills
 
         Use EXACTLY this HTML structure:
         <div class="header">
@@ -136,9 +138,7 @@ const downloadResumeController = async (req, res) => {
 
         <div class="section">
             <div class="section-title">Technical Skills</div>
-            <div class="skills-grid">
-                <span class="skill-item">[skills matching job first, then others]</span>
-            </div>
+            <p>[skill1, skill2, skill3, skill4 — all on one line, comma separated]</p>
         </div>
 
         <div class="section">
@@ -214,8 +214,10 @@ const downloadResumeController = async (req, res) => {
                 li { margin-bottom: 3px; font-size: 12.5px; color: #333; }
 
                 /* Skills */
-                .skills-grid { display: flex; flex-wrap: wrap; gap: 6px; }
-                .skill-item { background: #f3f0ff; color: #6c63ff; padding: 3px 10px; border-radius: 3px; font-size: 11.5px; font-weight: 500; border: 1px solid #d4ceff; }
+                .skills-grid { display: block; }
+                .skill-item { display: inline; font-size: 12.5px; }
+                .skill-item::after { content: ', '; }
+                .skill-item:last-child::after { content: ''; }
 
                 /* Education */
                 .edu-header { display: flex; justify-content: space-between; }
