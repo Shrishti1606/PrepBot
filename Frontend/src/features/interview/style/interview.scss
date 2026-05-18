@@ -210,6 +210,21 @@ $severity-low:    #34d399;
         &:hover { background: $accent-deep; color: #fff; }
     }
 
+    .download-note {
+        padding: 0.6rem 0.75rem;
+        background: rgba(167,139,250,0.08);
+        border: 1px solid rgba(167,139,250,0.15);
+        border-radius: 0.6rem;
+        margin-top: 0.5rem;
+
+        p {
+            font-size: 0.72rem;
+            color: $text-muted;
+            margin: 0;
+            line-height: 1.6;
+        }
+    }
+
     &__bottom { display: flex; flex-direction: column; gap: 0.5rem; }
 
     &__logout {
