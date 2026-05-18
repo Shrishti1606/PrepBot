@@ -94,36 +94,50 @@ const downloadResumeController = async (req, res) => {
     }
 
     const prompt = `
-        You are a professional resume writer. Create a polished ATS-friendly resume in HTML using EXACTLY these CSS classes.
+        You are a professional resume writer. Create a polished ATS-friendly resume in HTML.
 
-        CANDIDATE INFORMATION:
+        CANDIDATE INFORMATION (use ALL real details from here):
         Resume: ${report.resumeText || 'Not provided'}
         Self Description: ${report.selfDescription || 'Not provided'}
-        Job applying for: ${report.title}
+        
+        TARGET JOB:
+        Job Title: ${report.title}
         Job Description: ${report.jobDescription}
 
-        Use EXACTLY this HTML structure:
+        SKILL GAPS TO ADDRESS: ${report.skillGaps?.map(g => g.skill).join(', ')}
 
+        Rules:
+        - Use ONLY real details from the candidate's resume and self description
+        - Extract real name, email, phone, linkedin, github from resume
+        - Rewrite the professional summary to TARGET this specific job
+        - Reorder and emphasize skills that MATCH the job description first
+        - For experience bullet points, rephrase to highlight relevance to this job
+        - Add the skill gaps as "Learning/Improving" in skills section to show growth
+        - If no date is available leave it empty — never write "No specific date"
+        - Make LinkedIn and GitHub clickable using <a href="[url]" style="color:#6c63ff;text-decoration:none;">[url]</a>
+        - Return ONLY clean HTML body content, no markdown, no backticks
+
+        Use EXACTLY this HTML structure:
         <div class="header">
-            <h1>[Candidate Name]</h1>
+            <h1>[Real Candidate Name]</h1>
             <div class="contact">
                 <span>[Location]</span>
                 <span>[Phone]</span>
                 <span>[Email]</span>
-                <span>[LinkedIn]</span>
-                <span>[GitHub]</span>
+                <span>[LinkedIn as clickable link]</span>
+                <span>[GitHub as clickable link]</span>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">Summary</div>
-            <p>[2-3 sentence professional summary tailored to job]</p>
+            <div class="section-title">Professional Summary</div>
+            <p>[2-3 sentences tailored to the target job, highlighting most relevant experience]</p>
         </div>
 
         <div class="section">
             <div class="section-title">Technical Skills</div>
             <div class="skills-grid">
-                <span class="skill-item">[skill]</span>
+                <span class="skill-item">[skills matching job first, then others]</span>
             </div>
         </div>
 
@@ -137,7 +151,7 @@ const downloadResumeController = async (req, res) => {
                     </div>
                     <div class="entry-date">[Date Range]</div>
                 </div>
-                <ul><li>[achievement]</li></ul>
+                <ul><li>[achievement rewritten to highlight relevance to target job]</li></ul>
             </div>
         </div>
 
@@ -148,7 +162,7 @@ const downloadResumeController = async (req, res) => {
                     <div class="entry-title">[Project Name] | [Tech Stack]</div>
                     <div class="entry-date">[Date]</div>
                 </div>
-                <ul><li>[description]</li></ul>
+                <ul><li>[description emphasizing skills relevant to target job]</li></ul>
             </div>
         </div>
 
@@ -162,13 +176,6 @@ const downloadResumeController = async (req, res) => {
                 <div class="entry-date">[Year Range]</div>
             </div>
         </div>
-
-        Rules:
-        - Extract ALL real details from the candidate's resume
-        - Tailor summary and skills to match the job description
-        - Make LinkedIn and GitHub clickable using <a href="[url]" style="color: #6c63ff; text-decoration: none;">[url]</a>
-        - If no date is available, leave the date field completely empty — never write "No specific date" or similar
-        - Return ONLY the HTML body content, no markdown, no backticks
     `
 
     const response = await groqClient.chat.completions.create({
