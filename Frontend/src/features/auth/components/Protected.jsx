@@ -4,10 +4,10 @@ import { Navigate } from 'react-router'
 
 const Protected = ({ children}) => {
 
-    const { loading, user } = useauth()
+    const { loading, user } = useauth(true)
 
     if(loading){
-        return (<main> <h1>Loading.....</h1></main>)
+        return (<main> <h1>Loading...</h1> </main>)
     }
 
     if(!user){
