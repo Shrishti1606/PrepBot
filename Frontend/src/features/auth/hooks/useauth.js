@@ -69,6 +69,7 @@ export const useauth = () => {
         const getAndSetUser = async () => {
             try{
                 const data = await getMe()
+                console.log("getMe data:", data)
                 setUser(data?.user || null)
             } catch(err){
                 console.log("getMe failed:", err.response?.status)  // 👈 add this
